@@ -1,10 +1,10 @@
-# 🐕 Watchdog
+🐕 Watchdog
 
 **Self-hosted monitoring for your automation scripts, bots, and pipelines — with AI-powered failure diagnosis.**
 
 Most monitoring tools watch websites. Watchdog watches your background automation: scrapers, trading bots, data pipelines, cron jobs. When something breaks or goes silent, Watchdog tells you what went wrong and how to fix it — in plain English.
 
-![Watchdog Dashboard](https://placeholder.watchdog.dev/screenshot.png)
+![Watchdog Dashboard](screenshot.png)
 
 ---
 
@@ -22,7 +22,7 @@ Most monitoring tools watch websites. Watchdog watches your background automatio
 ## Quick Start
 
 ```bash
-git clone https://github.com/yourname/watchdog.git
+git clone https://github.com/noahsackville1-cyber/watchdog.git
 cd watchdog
 
 # Build (compiles frontend + Docker image)
@@ -59,7 +59,6 @@ try:
     exit_code = 0
 except Exception as e:
     exit_code = 1
-    # push error to logs
     requests.post(f"{WATCHDOG_URL}/api/jobs/{JOB_ID}/logs", json={
         "message": str(e), "level": "error"
     })
@@ -86,7 +85,9 @@ curl -X POST "http://your-server:8000/ping/abc123?exit_code=$?&duration=42"
 
 ```bash
 # crontab example
-0 * * * * /usr/local/bin/python /opt/my_scraper.py && curl -s "http://watchdog:8000/ping/abc123?exit_code=0" || curl -s "http://watchdog:8000/ping/abc123?exit_code=1"
+0 * * * * /usr/local/bin/python /opt/my_scraper.py && \
+  curl -s "http://watchdog:8000/ping/abc123?exit_code=0" || \
+  curl -s "http://watchdog:8000/ping/abc123?exit_code=1"
 ```
 
 ---
@@ -144,24 +145,15 @@ All settings are managed in the dashboard under **Settings**:
 ## API Reference
 
 ### Heartbeat
-
-```
 POST /ping/{ping_key}?exit_code=0&duration=12.3&msg=Done
 GET  /ping/{ping_key}
-```
 
 ### Logs
-
-```
 POST /api/jobs/{id}/logs
 Body: { "message": "...", "level": "info|warning|error", "run_id": "optional" }
-
 GET /api/jobs/{id}/logs?limit=200
-```
 
 ### Jobs
-
-```
 GET    /api/jobs
 POST   /api/jobs
 GET    /api/jobs/{id}
@@ -169,7 +161,6 @@ PUT    /api/jobs/{id}
 DELETE /api/jobs/{id}
 POST   /api/jobs/{id}/diagnose   # trigger manual AI diagnosis
 GET    /api/jobs/{id}/diagnoses  # list past diagnoses
-```
 
 ---
 

@@ -1,0 +1,18 @@
+services:
+  watchdog:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - watchdog_data:/app/data
+    environment:
+      - DATABASE_URL=sqlite:////app/data/watchdog.db
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  watchdog_data:

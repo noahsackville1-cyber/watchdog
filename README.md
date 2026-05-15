@@ -1,4 +1,4 @@
-🐕 Watchdog
+# 🐕 Watchdog
 
 **Self-hosted monitoring for your automation scripts, bots, and pipelines — with AI-powered failure diagnosis.**
 
@@ -22,7 +22,7 @@ Most monitoring tools watch websites. Watchdog watches your background automatio
 ## Quick Start
 
 ```bash
-git clone https://github.com/noahsackville1-cyber/watchdog.git
+git clone https://github.com/nxsh-stack/watchdog.git
 cd watchdog
 
 # Build (compiles frontend + Docker image)
